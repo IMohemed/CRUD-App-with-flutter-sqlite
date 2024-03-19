@@ -162,7 +162,7 @@ class _home2State extends State<home2> {
                                       width: MediaQuery.of(context).size.width/1.9,
                                       child: OutlinedButton.icon(
                                           label: Text('Delete',style: TextStyle(color: Colors.red[400])),
-                                          icon: Icon(Icons.delete),
+                                          icon: Icon(Icons.delete,color:  Colors.red[400],),
                                             onPressed: () async{
                                               showAlertDialog(pcode);
                                 },
@@ -176,7 +176,7 @@ class _home2State extends State<home2> {
                                       label: Text('update',),
                                       icon: Icon(Icons.edit_sharp),
                                         onPressed: (){
-                                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Home(pcode: pcode, pprice: pprice, sprice: sprice)),);
+                                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Home(pcode: pcode,name: pname, pprice: pprice, sprice: sprice)),);
                                                     }
                                   ),
                                 ),]

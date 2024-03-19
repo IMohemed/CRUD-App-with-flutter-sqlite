@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
       
     // }
     pidController = widget.pcode != null ? TextEditingController(text: "${widget.pcode}") : pidController;
-    pnameController = widget.name != null ? TextEditingController(text: widget.name) : pnameController;
+    pnameController = widget.name != null ? TextEditingController(text: "${widget.name}") : pnameController;
     puprceController = widget.pprice != null ? TextEditingController(text: "${widget.pprice}") : puprceController;
     sepriceController = widget.sprice != null ? TextEditingController(text:"${ widget.sprice}") : sepriceController;
 
@@ -111,118 +111,116 @@ class _HomeState extends State<Home> {
        ),
        body: SingleChildScrollView(
         
-         child: Column(
-          
-           
-          key: _formstate,
-          children: [
-            //SingleChildScrollView(),
+         child: Padding(
+           padding: const EdgeInsets.all(8.0),
+           child: Column(
             
-            
-            //  TextField(controller:TextEditingController(text: widget.name)),
-            //   TextField(controller:TextEditingController(text: widget.pcode.toString())),
-            //   TextField(controller:TextEditingController(text: widget.pprice.toString())),
-            //   TextField(controller:TextEditingController(text: widget.sprice.toString())),
-            SizedBox(height: 10.0,),
-            TextField(controller: pidController,
-               keyboardType: TextInputType.number,
-               enabled: widget.pcode == null,
-               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                FilteringTextInputFormatter.digitsOnly
-               ],
-               decoration:InputDecoration(
-                border:OutlineInputBorder(),
-                label:Text('number')
-               )
-         //         onChanged: (text) {
-         //         editedText1 = int.tryParse(text);
-         // }, 
-            ),
-            SizedBox(height: 10.0,),
-            //if(widget.name!=null)TextField(controller:TextEditingController(text: widget.pcode.toString())),
-            TextFormField(controller: pnameController,
-            validator:(value){
-                if(value == ''){
-                  return "field is empty";
-                }
-            },
-            onChanged: (text) {
-            editedText2 = text;
-         },
-         decoration:InputDecoration(
-                border:OutlineInputBorder(),
-                label:Text('name')
-               ) 
-            ),
-            SizedBox(height: 10.0,),
-            
-            TextFormField(controller: puprceController,
-            validator:(value){
-                if(value == ''){
-                  return "field is empty";
-                }
-            },
-            keyboardType: TextInputType.number,
-            
-               decoration:InputDecoration(
-                border:OutlineInputBorder(),
-                label:Text('Purchase price')
-               )
-        
-            ),
-            SizedBox(height: 10.0,),
-            
-            TextFormField(controller: sepriceController,
-            keyboardType: TextInputType.number,
-            validator:(value){
-                if(value == ''){
-                  return "field is empty";
-                }
-            },
-               decoration:InputDecoration(
-                border:OutlineInputBorder(),
-                label:Text('Selling price')
-               )
-         //          
-            ),
-            
-            SizedBox(height: 5.0,),
-            selectedImage!=null? CircleAvatar(
-              radius: 50,
-              backgroundImage: MemoryImage(selectedImage!),
-            ):const CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage("https://th.bing.com/th/id/OIP.UoP79f2D8ELqNgSbt02C1wHaHa?rs=1&pid=ImgDetMain"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                // Pick image from gallery
-                showDataAlert();
+             
+            key: _formstate,
+            children: [
+              SizedBox(height: 5.0,),
+              selectedImage!=null? CircleAvatar(
+                radius: 50,
+                backgroundImage: MemoryImage(selectedImage!),
+              ):const CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage("https://th.bing.com/th/id/OIP.UoP79f2D8ELqNgSbt02C1wHaHa?rs=1&pid=ImgDetMain"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  // Pick image from gallery
+                  showDataAlert();
+                },
+                child: Text('Pick Image'),
+              ),
+              SizedBox(height: 10.0,),
+              TextField(controller: pidController,
+                 keyboardType: TextInputType.number,
+                 enabled: widget.pcode == null,
+                 inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  FilteringTextInputFormatter.digitsOnly
+                 ],
+                 decoration:InputDecoration(
+                  border:OutlineInputBorder(),
+                  label:Text('number')
+                 )
+           //         onChanged: (text) {
+           //         editedText1 = int.tryParse(text);
+           // }, 
+              ),
+              SizedBox(height: 10.0,),
+              //if(widget.name!=null)TextField(controller:TextEditingController(text: widget.pcode.toString())),
+              TextFormField(controller: pnameController,
+              validator:(value){
+                  if(value == ''){
+                    return "field is empty";
+                  }
               },
-              child: Text('Pick Image'),
-            ),
-                                Container(
-                                width: MediaQuery.of(context).size.width/1.9,
-                                child: ElevatedButton(
-                                    
-                                    child: Text('Save'),
-                                      onPressed:widget.pcode != null ? null:() {
-                                        handleElevatedButtonPress();
-                                          //await localDatabase().readAllData();
-                                      },
-                                ),),
-                                Container(
-                                width: MediaQuery.of(context).size.width/1.9,
-                                child: ElevatedButton(
-                                    child: Text('update'),
-                                      onPressed:widget.pcode != null ? () async{
-                                          await localDatabase().updateData(Name: pnameController?.text,id: pidController?.text,pprice: puprceController?.text,sprice: sepriceController?.text,image: img);
-                                          Navigator.push(context,MaterialPageRoute(builder: (context) => home2()));
-                                          //await localDatabase().readAllData();
-                                      }:null,
-                                ),)
-          ],
+              onChanged: (text) {
+              editedText2 = text;
+           },
+           decoration:InputDecoration(
+                  border:OutlineInputBorder(),
+                  label:Text('name')
+                 ) 
+              ),
+              SizedBox(height: 10.0,),
+              
+              TextFormField(controller: puprceController,
+              validator:(value){
+                  if(value == ''){
+                    return "field is empty";
+                  }
+              },
+              keyboardType: TextInputType.number,
+              
+                 decoration:InputDecoration(
+                  border:OutlineInputBorder(),
+                  label:Text('Purchase price')
+                 )
+                 
+              ),
+              SizedBox(height: 10.0,),
+              
+              TextFormField(controller: sepriceController,
+              keyboardType: TextInputType.number,
+              validator:(value){
+                  if(value == ''){
+                    return "field is empty";
+                  }
+              },
+                 decoration:InputDecoration(
+                  border:OutlineInputBorder(),
+                  label:Text('Selling price')
+                 )
+           //          
+              ),
+              
+              SizedBox(height: 16,),
+              widget.pcode == null ?
+                                  Container(
+                                  width: MediaQuery.of(context).size.width/1.9,
+                                  child: ElevatedButton(
+                                      
+                                      child: Text('Save'),
+                                        onPressed: () {
+                                          handleElevatedButtonPress();
+                                            //await localDatabase().readAllData();
+                                        },
+                                  ),):
+                                  Container(
+                                  width: MediaQuery.of(context).size.width/1.9,
+                                  child: ElevatedButton(
+                                      child: Text('update'),
+                                        onPressed: () async{
+                                            await localDatabase().updateData(Name: pnameController?.text,id: pidController?.text,pprice: puprceController?.text,sprice: sepriceController?.text,image: img);
+                                            Navigator.push(context,MaterialPageRoute(builder: (context) => home2()));
+                                            //await localDatabase().readAllData();
+                                        },
+                                  ),)
+            ],
+           ),
          ),
        ),
     );
@@ -322,9 +320,12 @@ class _HomeState extends State<Home> {
   void handleElevatedButtonPress()async {
   // Do something with the index, e.g., show a toast or navigate to another screen
    bool idExists = await localDatabase().isIdAlreadyExists(pidController.text ?? '');
-  if(_formstate.currentState!.validate() && selectedImage != null){
-                                       if(idExists){
-                                          _showToast("Alreadyexists");
+  if(_formstate.currentState!.validate() ){
+                                       if( selectedImage == null){
+                                         _showToast("pick an image");
+                                       }
+                                       else if(idExists){
+                                          _showToast("Id Already exists");
                                         }
                                         else{
                                           await localDatabase().addDataLocally(pid: pidController?.text,pName: pnameController?.text,pprice: puprceController?.text,sprice: sepriceController.text,imag: img );

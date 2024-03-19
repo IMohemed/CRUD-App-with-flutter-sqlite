@@ -7,7 +7,7 @@ import 'package:flutter_database/Pages/home1.dart';
 import 'package:flutter_database/Pages/signup.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final _formkey=GlobalKey<FormState>();
+
 
 
 class login extends StatefulWidget {
@@ -18,10 +18,11 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
-
+final _formkey=GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   FToast? fToast;
+  bool _isObscured=true;
 
   @override
   void initState() {
@@ -70,11 +71,19 @@ class _loginState extends State<login> {
                   SizedBox(height: 16.0),
                   TextFormField(
                     controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                    ),
+                    obscureText: _isObscured,
+                    decoration:InputDecoration(
+                  suffixIcon: IconButton(
+                  icon: Icon(!_isObscured ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _isObscured = !_isObscured;
+                    });
+                  },
+                ),
+                  border:OutlineInputBorder(),
+                  label:Text(' password'),
+                 ),
                     validator:(value){
                 if(value == ''){
                   return "field is empty";
@@ -95,18 +104,11 @@ class _loginState extends State<login> {
                       else{  
                       Navigator.push(context,MaterialPageRoute(builder: (context) => home1()),);
                       
-                        usernameController == null;  
-                        passwordController == null;}
+                        usernameController.clear();  
+                        passwordController.clear();}
                       
                       }
-                      else{
-                       
-                        
-                
-                      // Add your logic for handling username and password
-                      //print('Username: $username, Password: $password');
-                    }
-                      },
+                       },
                       
                       
                     child: Text('Login'),

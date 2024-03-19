@@ -3,7 +3,7 @@ import 'package:flutter_database/DB_Connection/db_conn.dart';
 import 'package:flutter_database/Pages/login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final _formkey=GlobalKey<FormState>();
+
 
 
 class signup extends StatefulWidget {
@@ -14,7 +14,7 @@ class signup extends StatefulWidget {
 }
 
 class _signupState extends State<signup> {
-
+   final _formkey=GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   FToast? fToast;
@@ -82,15 +82,16 @@ class _signupState extends State<signup> {
                     bool idExists = await localDatabase().login(usernameController.text??'', passwordController.text??'');
                    if(_formkey.currentState!.validate()){
                                            if(idExists){
-                                                    _showToast();
+                                                    _showToast("Id exists");
                                              }
-                                            await localDatabase().save(pid: passwordController.text,pName: usernameController.text);
-                                            //Navigator.of(context).pop();
+                                            else{
+                                              await localDatabase().save(pid: passwordController.text,pName: usernameController.text);
+                                               _showToast("Saved successfully");
+                                              Navigator.of(context).pop();
+                                              }
                                             }
                                              
-                                            else{
-                                              //_showToast();
-                                            }
+                                            
               
                     // Add your logic for handling username and password
                    // print('Username: $username, Password: $password');
@@ -107,7 +108,7 @@ class _signupState extends State<signup> {
   
     
   }
-   _showToast() {
+   _showToast(name) {
     Widget toast = Container(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
         decoration: BoxDecoration(
@@ -121,7 +122,7 @@ class _signupState extends State<signup> {
             SizedBox(
             width: 12.0,
             ),
-            Text("Saved successfully!"),
+            Text("${name}"),
         ],
         ),
     );
@@ -134,15 +135,15 @@ class _signupState extends State<signup> {
     );
     
     // Custom Toast Position
-    fToast?.showToast(
-        child: toast,
-        toastDuration: Duration(seconds: 2),
-        positionedToastBuilder: (context, child) {
-          return Positioned(
-            child: child,
-            top: 16.0,
-            left: 16.0,
-          );
-        });
+    // fToast?.showToast(
+    //     child: toast,
+    //     toastDuration: Duration(seconds: 2),
+    //     positionedToastBuilder: (context, child) {
+    //       return Positioned(
+    //         child: child,
+    //         top: 16.0,
+    //         left: 16.0,
+    //       );
+    //     });
 }
 }
